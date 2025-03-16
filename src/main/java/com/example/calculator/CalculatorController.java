@@ -40,7 +40,6 @@ public class CalculatorController {
         }
         String value = ((Button) event.getSource()).getText();
 
-        // Если текущий текст — "0", заменяем его на введенное значение (кроме точки)
         if (output.getText().equals("0") && !value.equals(".")) {
             output.setText(value);
         } else {
@@ -151,7 +150,7 @@ public class CalculatorController {
             return;
         }
         if (output.getText().equals("0")) {
-            output.setText("("); // Удаляем ноль и добавляем скобку
+            output.setText("(");
         } else {
             output.setText(output.getText() + "(");
         }
@@ -163,7 +162,7 @@ public class CalculatorController {
             return;
         }
         if (output.getText().equals("0")) {
-            output.setText(")"); // Удаляем ноль и добавляем скобку
+            output.setText(")");
         } else {
             output.setText(output.getText() + ")");
         }
@@ -176,7 +175,7 @@ public class CalculatorController {
         }
         if (!output.getText().contains(".")) {
             if (output.getText().isEmpty() || output.getText().equals("0")) {
-                output.setText("0."); // Добавляем "0.", если строка пуста или содержит только ноль
+                output.setText("0.");
             } else {
                 output.setText(output.getText() + ".");
             }
@@ -190,7 +189,7 @@ public class CalculatorController {
         }
         try {
             double number = Double.parseDouble(output.getText());
-            double result = number / 100.0; // Вычисляем процент
+            double result = number / 100.0;
             output.setText(String.valueOf(result));
         } catch (NumberFormatException e) {
             output.setText("ERROR");
@@ -204,7 +203,7 @@ public class CalculatorController {
         }
         try {
             double number = Double.parseDouble(output.getText());
-            number = -number; // Меняем знак на противоположный
+            number = -number;
             output.setText(String.valueOf(number));
         } catch (NumberFormatException e) {
             output.setText("ERROR");
@@ -217,8 +216,8 @@ public class CalculatorController {
         Map<Character, Integer> precedence = new HashMap<>();
         precedence.put('+', 1);
         precedence.put('-', 1);
-        precedence.put('×', 2);
-        precedence.put('÷', 2);
+        precedence.put('*', 2);
+        precedence.put('/', 2);
         precedence.put('^', 3);
 
         for (int i = 0; i < expression.length(); i++) {
@@ -282,10 +281,10 @@ public class CalculatorController {
                     case "-":
                         stack.push(num1 - num2);
                         break;
-                    case "×":
+                    case "*":
                         stack.push(num1 * num2);
                         break;
-                    case "÷":
+                    case "/":
                         if (num2 == 0) {
                             return Double.NaN;
                         }
